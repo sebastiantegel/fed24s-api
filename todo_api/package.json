@@ -13,8 +13,10 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "@types/morgan": "^1.9.9",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.9",
