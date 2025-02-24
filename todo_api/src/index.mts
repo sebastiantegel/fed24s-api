@@ -1,4 +1,5 @@
 import express from "express";
+import { Request, Response } from "express";
 import { Todo } from "./models/Todo.mjs";
 import dotenv from "dotenv";
 
@@ -16,6 +17,8 @@ const todos: Todo[] = [
 ];
 
 const app = express();
+
+app.use(express.json())
 
 app.get("/ping", (_, res) => {
   res.status(200).json({ status: "Alive" });
@@ -54,6 +57,22 @@ app.get("/todos/:id", (req, res) => {
     res.status(500).send(error);
   }
 });
+
+app.post('/todos', (req: Request, res: Response) => {
+  const { text } = req.body
+
+  try {
+    if (!text) {
+      res.status(400).json({ error: "Text is required" })
+    } else {
+      const newTodo = new Todo(todos.length + 1, text)
+      todos.push(newTodo)
+      res.status(201).json(newTodo)
+    }
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 
 app.listen(port, () => {
   console.log("Api is up and running");
