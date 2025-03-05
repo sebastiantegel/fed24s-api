@@ -1,34 +1,11 @@
-import { Types } from "mongoose";
+import { InferSchemaType, Types } from "mongoose";
 import { UserDto } from "../models/userDto.mjs";
 import User from "../models/userSchema.mjs";
 import { TodoDto } from "../models/TodoDto.mjs";
 
-const convertUserDbToUserDto = (userFromDb: {
-  todos: Types.DocumentArray<
-    {
-      id: number;
-      text: string;
-      done: boolean;
-    },
-    Types.Subdocument<
-      Types.ObjectId,
-      any,
-      {
-        id: number;
-        text: string;
-        done: boolean;
-      }
-    > & {
-      id: number;
-      text: string;
-      done: boolean;
-    }
-  >;
-  id: number;
-  name: string;
-  email?: string | undefined | null;
-  adress?: string | undefined | null;
-}) => {
+type UserType = InferSchemaType<typeof User.schema>;
+
+const convertUserDbToUserDto = (userFromDb: UserType): UserDto => {
   return {
     id: userFromDb.id,
     name: userFromDb.name,
