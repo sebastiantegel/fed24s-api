@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import { userRouter } from "./routes/userRoute.mjs";
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ if (!dbUrl) {
 
 const app = express();
 app.use(json());
+app.use("/users", userRouter);
 
 app.get("/ping", (_, res) => {
   res.status(200).json({ status: "Alive" });
