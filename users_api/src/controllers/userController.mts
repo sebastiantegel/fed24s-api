@@ -10,7 +10,7 @@ const convertUserDbToUserDto = (userFromDb: UserType): UserDto => {
     id: userFromDb.id,
     name: userFromDb.name,
     todos: userFromDb.todos.map(
-      (t) => ({ id: t.id, text: t.text, done: t.done } satisfies TodoDto),
+      (t) => ({ id: t.id, text: t.text, done: t.done } satisfies TodoDto)
     ),
   } satisfies UserDto;
 };
@@ -18,7 +18,7 @@ const convertUserDbToUserDto = (userFromDb: UserType): UserDto => {
 export const createUser = async (
   name: string,
   email?: string,
-  adress?: string,
+  adress?: string
 ): Promise<UserDto> => {
   const newUser = await User.create({
     id: Date.now(),
@@ -43,7 +43,7 @@ export const getUsers = async (): Promise<UserDto[]> => {
 
 export const addTodoToUser = async (
   id: number,
-  todo: string,
+  todo: string
 ): Promise<UserDto> => {
   const foundUser = await User.findOne({ id: id });
 
