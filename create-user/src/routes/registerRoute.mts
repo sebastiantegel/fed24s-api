@@ -20,7 +20,7 @@ registerRouter.post("/", async (req, res) => {
       const newUser = await createUser({ name, email, password });
       res.status(200).json(newUser);
     }
-  } catch (error) {
-    res.status(500).send(error);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
 });

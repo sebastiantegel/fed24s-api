@@ -18,7 +18,7 @@ loginRouter.post("/", async (req, res) => {
         res.status(200).json(loggedInUser);
       }
     }
-  } catch (error) {
-    res.status(500).send(error);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
 });
