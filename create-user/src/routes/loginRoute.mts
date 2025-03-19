@@ -1,5 +1,6 @@
 import express from "express";
 import { login } from "../controllers/loginController.mjs";
+import jwt from "jsonwebtoken";
 
 export const loginRouter = express.Router();
 
@@ -15,6 +16,15 @@ loginRouter.post("/", async (req, res) => {
       if (!loggedInUser) {
         res.status(400).json({ message: "Incorrect email/password" });
       } else {
+        const token = jwt.sign(loggedInUser, "my-secret");
+
+        const currentDate = new Date();
+        currentDate.setHours(currentDate.getHours() + 1);
+
+        res.cookie("login", token, {
+          expires: currentDate,
+        });
+
         res.status(200).json(loggedInUser);
       }
     }

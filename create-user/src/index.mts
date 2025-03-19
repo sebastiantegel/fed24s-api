@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { registerRouter } from "./routes/registerRoute.mjs";
 import { loginRouter } from "./routes/loginRoute.mjs";
+import { secretRouter } from "./routes/secretRoute.mjs";
+import cookieParser from "cookie-parser";
+import { auth } from "./middlewares/auth.mjs";
 
 dotenv.config();
 
@@ -14,9 +17,13 @@ if (!dbUrl) throw Error("No MONGO_URL in env file");
 const app = express();
 
 app.use(json());
+app.use(cookieParser());
 
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
+
+app.use(auth);
+app.use("/secret", secretRouter);
 
 app.get("/ping", (_, res) => {
   res.status(200).json({ status: "I'm aliiiiive" });
