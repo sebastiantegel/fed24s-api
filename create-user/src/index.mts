@@ -25,6 +25,7 @@ app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 
 app.use(auth);
+// Hit kommer jag bara om jag är inloggad
 app.use("/secret", secretRouter);
 
 app.get("/ping", (_, res) => {
