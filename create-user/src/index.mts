@@ -6,6 +6,7 @@ import { loginRouter } from "./routes/loginRoute.mjs";
 import { secretRouter } from "./routes/secretRoute.mjs";
 import cookieParser from "cookie-parser";
 import { auth } from "./middlewares/auth.mjs";
+import cors from "cors";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ if (!dbUrl) throw Error("No MONGO_URL in env file");
 
 const app = express();
 
+app.use(cors({ credentials: true, origin: true }));
 app.use(json());
 app.use(cookieParser());
 

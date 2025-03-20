@@ -23,6 +23,7 @@ loginRouter.post("/", async (req, res) => {
 
         res.cookie("login", token, {
           expires: currentDate,
+          httpOnly: false,
         });
 
         res.status(200).json(loggedInUser);
