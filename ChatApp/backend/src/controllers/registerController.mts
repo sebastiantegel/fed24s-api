@@ -1,6 +1,6 @@
 import User from "../models/userSchema.mjs";
 import { InferSchemaType } from "mongoose";
-import { UserDto } from "../models/userDto.mjs";
+import { UserDto } from "../models/UserDto.mjs";
 import { RegisterRequest } from "../routes/registerRoute.mjs";
 import bcrypt from "bcryptjs";
 

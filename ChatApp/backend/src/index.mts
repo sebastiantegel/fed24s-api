@@ -6,7 +6,7 @@ import { loginRouter } from "./routes/loginRoute.mjs";
 import { registerRouter } from "./routes/registerRoute.mjs";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import { Chat, Message } from "./models/Chat.mjs";
+import { Message } from "./models/Chat.mjs";
 import cookieParser from "cookie-parser";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
