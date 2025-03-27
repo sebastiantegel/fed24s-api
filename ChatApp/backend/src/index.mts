@@ -11,14 +11,9 @@ import cookieParser from "cookie-parser";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { UserDto } from "./models/UserDto.mjs";
+import ChatModel from "./models/chatSchema.mjs";
 
 dotenv.config();
-
-const chats: Chat[] = [
-  { name: "React", messages: [] },
-  { name: "Next.js", messages: [] },
-  { name: "Open AI", messages: [] },
-];
 
 const port = process.env.PORT || 3000;
 const mongoUrl = process.env.MONGO_URL;
@@ -53,22 +48,26 @@ const io = new Server(server, {
   cookie: true,
 });
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log("A user has connected:", socket.id);
 
   // Parse cookies from the socket handshake headers
   const cookies = cookie.parse(socket.handshake.headers.cookie || "");
   const loginCookie = cookies.login;
 
+  const chats = await ChatModel.find();
+
   socket.emit("chatList", chats);
 
-  socket.on("joinRoom", (room: string) => {
+  socket.on("joinRoom", async (room: string) => {
     socket.join(room);
-    socket.emit("roomMessages", chats.find((c) => c.name === room)?.messages);
+
+    const chat = await ChatModel.findOne({ name: room });
+    socket.emit("roomMessages", chat?.messages);
   });
 
-  socket.on("sendMessage", (message: string, room: string) => {
-    const chatToUpdate = chats.find((c) => c.name === room);
+  socket.on("sendMessage", async (message: string, room: string) => {
+    const chatToUpdate = await ChatModel.findOne({ name: room });
 
     if (chatToUpdate && loginCookie) {
       const user = jwt.decode(loginCookie) as UserDto;
@@ -80,6 +79,7 @@ io.on("connection", (socket) => {
       };
 
       chatToUpdate.messages.push(newMessage);
+      await chatToUpdate.save();
 
       io.to(room).emit("messageReceived", newMessage);
     }

@@ -50,4 +50,5 @@ document.getElementById("send")?.addEventListener("click", () => {
   // Validering
 
   socket.emit("sendMessage", messageToSend, selectedRoom);
+  (document.getElementById("newMessage") as HTMLInputElement).value = "";
 });
