@@ -1,12 +1,12 @@
 import { io } from "socket.io-client";
 import "./style.css";
-import { Chat, Message } from "./models/Chat";
 import {
   createChatMessagesHtml,
   createChatRoomButtonHtml,
   createMessageHtml,
   selectedRoom,
 } from "./helpers/htmlHelper";
+import { Chat, Message } from "@sebastiantegel/edutypes";
 
 const cookies = document.cookie.split("; ");
 const loginCookie = cookies.find((cookie) => cookie.startsWith("login="));

@@ -12,6 +12,7 @@
   "description": "",
   "type": "module",
   "dependencies": {
+    "@sebastiantegel/edutypes": "^1.0.3",
     "bcryptjs": "^3.0.2",
     "cookie": "^1.0.2",
     "cookie-parser": "^1.4.7",

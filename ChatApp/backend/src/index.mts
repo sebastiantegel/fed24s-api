@@ -6,12 +6,12 @@ import { loginRouter } from "./routes/loginRoute.mjs";
 import { registerRouter } from "./routes/registerRoute.mjs";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
-import { Message } from "./models/Chat.mjs";
 import cookieParser from "cookie-parser";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { UserDto } from "./models/UserDto.mjs";
 import ChatModel from "./models/chatSchema.mjs";
+import { Message } from "@sebastiantegel/edutypes";
 
 dotenv.config();
 
